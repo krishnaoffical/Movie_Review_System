@@ -1,0 +1,5 @@
+<div class="like-buttons">
+  <span class="like-count"><%= review.likes.count %> Likes</span>
+  <%= link_to "Unlike", movie_review_likes_path(@movie,review), method: :delete, class: "unlike-button" %>
+    <%= link_to "Like", movie_review_likes_path(@movie,review), method: :post, class: "like-button" %>
+</div>

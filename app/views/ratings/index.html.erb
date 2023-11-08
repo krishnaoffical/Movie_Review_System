@@ -1,0 +1,42 @@
+<head>
+  <%= stylesheet_link_tag 'ratings' %>
+</head>
+<h1>Ratings for <%= @movie.title %></h1>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Rating</th>
+    <th>User</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @ratings.each do |rating| %>
+      <tr>
+        <td><% filled_stars = rating.rating_value.round %>
+          <span class="star-rating">
+    <% 5.times do |i| %>
+      <% if i < filled_stars %>
+        <span class="star filled">&#9733;</span>
+      <% else %>
+        <span class="star">&#9733;</span>
+      <% end %>
+            <% end %><small>(<%=rating.rating_value %>)</small></span></td>
+        <td><%=rating.user.email %></td>
+        <% if can? :update,rating %>
+        <td><%= link_to 'Edit', edit_movie_rating_path(@movie,rating)%></td>
+          <%end %>
+        <% if can? :destroy,rating %>
+        <td><%= link_to 'Destroy', movie_rating_path(@movie,rating), method: :delete, data:{confirm: "Are you sure? "}%></td>
+       <%end %>
+          </tr>
+    <% end %>
+
+  </tbody>
+</table>
+
+<br>
+<%=link_to 'New Rating',new_movie_rating_path(@movie) %>
+  <%= link_to 'Back to Movie', movie_path(@movie) %>

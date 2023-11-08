@@ -32,9 +32,15 @@
   </div>
 
   <div class="field">
-    <%= form.label :rating %>
-    <%= form.text_field :rating %>
+    <%= form.label :genre %>
+    <%= form.text_field :genre%>
   </div>
+
+  <div class="field">
+    <%= form.label :release_date %>
+    <%= form.date_field :release_date %>
+  </div>
+
   <div class="field">
     <%=form.label :image %>
     <%=form.file_field :image %>

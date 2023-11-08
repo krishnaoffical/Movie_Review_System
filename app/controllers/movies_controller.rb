@@ -3,7 +3,15 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
+    @movies = Movie.includes(image_attachment: :blob).highest_rated_first.page(params[:page]).per(2)
+  if params[:start_date].present?
+    start_date = Date.parse(params[:start_date])
+    end_date = params[:end_date].present? ? Date.parse(params[:end_date]) : Date.today
+    @movies = @movies.released_between(start_date, end_date)
+  end
+    if params[:search].present?
+      @movies = @movies.search_by_title(params[:search])
+    end
   end
 
   # GET /movies/1 or /movies/1.json
@@ -65,6 +73,6 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:title, :description, :movie_length, :director, :rating,:image)
+      params.require(:movie).permit(:title, :description, :movie_length, :director, :genre, :release_date, :image)
     end
 end

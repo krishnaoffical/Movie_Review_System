@@ -1,0 +1,34 @@
+<h1>Reviews for <%= @movie.title%></h1>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Comment</th>
+    <th>Author(User)</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @reviews.each do |review| %>
+    <tr>
+      <td><%= review.comment %></td>
+      <td><%= review.user.email %></td>
+      <td><%= render 'likes/like', review: review %></td>
+      <% if can? :update, review %>
+      <td><%=link_to 'Edit', edit_movie_review_path(@movie,review) %></td>
+        <%end %>
+      <% if can? :destroy, review %>
+      <td><%=link_to 'Delete',movie_review_path(@movie,review),method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end %>
+      <td><%= %></td>
+    </tr>
+  <% end %>
+
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New review', new_movie_review_path %> |
+<%= link_to 'Back to Movie', movie_path(@movie) %>

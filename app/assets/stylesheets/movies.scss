@@ -1,3 +1,19 @@
 // Place all the styles related to the Movies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.star-count {
+  font-size: 14px; /* Adjust the size as needed */
+  display: flex;
+}
+.star.filled {
+  color: gold; /* Filled star color */
+}
+.star {
+  color: gray; /* Default star color */
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
