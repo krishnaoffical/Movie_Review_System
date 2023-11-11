@@ -3,7 +3,7 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.includes(image_attachment: :blob).highest_rated_first.page(params[:page]).per(2)
+    @movies = Movie.includes(image_attachment: :blob).highest_rated_first.page(params[:page]).per(10)
   if params[:start_date].present?
     start_date = Date.parse(params[:start_date])
     end_date = params[:end_date].present? ? Date.parse(params[:end_date]) : Date.today

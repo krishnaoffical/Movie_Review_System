@@ -11,58 +11,79 @@
     </div>
   <% end %>
 </div>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" >
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <%=link_to 'Movies Review',root_path,class:  "navbar-brand active"%>
+    <%= link_to 'Movies Review', root_path, class: 'navbar-brand' %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <%if user_signed_in? %>
+        <% if user_signed_in? %>
           <li class="nav-item">
-            <p><%=current_user.username %></p>
-          </li>
-        <li class="nav-item">
-          <%=link_to 'New Movie',new_movie_path,class: "nav-link active" %>
-        </li>
-          <li class="nav-item">
-          <%=link_to 'Edit Profile',edit_user_registration_path,class: "nav-link active"%>
+            <%= content_tag(:span, current_user.username, class: 'nav-link') %>
           </li>
           <li class="nav-item">
-            <%=link_to 'Log out',destroy_user_session_path,method: :delete,class: "nav-link active"%>
+            <%= link_to 'New Movie', new_movie_path, class: 'nav-link' %>
           </li>
           <li class="nav-item">
-          <%if current_user.image.attached? %>
-            <%=image_tag current_user.image  ,class: "userimage" %>
-          <%else %>
-            <p>No image</p>
-          <%end %>
+            <%= link_to "Edit Profile", edit_user_registration_path, {remote: :true ,'data-bs-toggle' =>  "modal", 'data-bs-target' => '#exampleModalCenter',  class: 'nav-link',id: 'edit-profile'}  %>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                </div>
+              </div>
+            </div>
           </li>
-          <%else %>
-        <li class="nav-item dropdown" >
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <%=link_to 'Sign up',new_user_registration_path,class: "nav-link active"%>
-        </li>
+          <li class="nav-item">
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" type="button" id="dateFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Date Filter
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dateFilterDropdown">
+                <li>
+                  <form class="form-inline" action="<%= movies_path %>" method="get">
+                    <div class="form-group mx-sm-3 mb-2">
+                      <label for="start_date" class="sr-only">Start Date</label>
+                      <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                      <label for="end_date" class="sr-only">End Date</label>
+                      <%= date_field_tag :end_date, params[:end_date], class: "form-control" %>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Filter</button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <% if current_user.image.attached? %>
+              <%= image_tag current_user.image, class: 'userimage' %>
+            <% else %>
+              <p>No image</p>
+            <% end %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%=link_to 'Sign up',new_user_registration_path,class: "nav-link active"%>
+          </li>
           <li class="nav-item">
             <%=link_to 'Log in',new_user_session_path,class: "nav-link active"%>
           </li>
-          <%end %>
+        <% end %>
       </ul>
-        <form class="d-flex" role="search" action="<%= movies_path %>" method="get">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+      <!-- Search form -->
+      <form class="d-flex" role="search" action="<%= movies_path %>" method="get">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
   </div>
 </nav>
+

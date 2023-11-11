@@ -2,9 +2,9 @@ class LikesController < ApplicationController
   def create
     @movie = Movie.find(params[:movie_id])
     @review = Review.find(params[:review_id])
-    @like = @review.likes.build()
+    @like = @review.likes.build(like_params)
     @like.user=current_user
-    @like.liked=true
+    # @like.liked=true
     if @like.save
       flash[:notice] = 'Liked the review'
     else
@@ -13,18 +13,8 @@ class LikesController < ApplicationController
     redirect_to movie_reviews_path(@movie)
   end
 
-  def destroy
-    @movie = Movie.find(params[:movie_id])
-    @review = Review.find(params[:review_id])
-    @like = @review.likes.build()
-    @like.user=current_user
-    @like.liked=false
-    if @like.save
-      flash[:notice] = 'Unliked the review'
-    else
-      flash[:alert] = 'Failed to like the review'
-    end
-    redirect_to movie_reviews_path(@movie)
+  private
+  def like_params
+    params.permit(:liked)
   end
-
 end

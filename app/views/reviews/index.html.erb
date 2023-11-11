@@ -1,34 +1,55 @@
-<h1>Reviews for <%= @movie.title%></h1>
+<div class="container mt-4">
+  <h1 class="mb-4">Reviews for <%= @movie.title %></h1>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Comment</th>
-    <th>Author(User)</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
+  <div class="row">
+    <% @reviews.each do |review| %>
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= review.user.email %></h5>
+            <p class="card-text"><%= review.comment %></p>
+            <%= render 'likes/like', review: review %>
 
-  <tbody>
-  <% @reviews.each do |review| %>
-    <tr>
-      <td><%= review.comment %></td>
-      <td><%= review.user.email %></td>
-      <td><%= render 'likes/like', review: review %></td>
-      <% if can? :update, review %>
-      <td><%=link_to 'Edit', edit_movie_review_path(@movie,review) %></td>
-        <%end %>
-      <% if can? :destroy, review %>
-      <td><%=link_to 'Delete',movie_review_path(@movie,review),method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <%end %>
-      <td><%= %></td>
-    </tr>
-  <% end %>
 
-  </tbody>
-</table>
 
-<br>
+            <!-- Button trigger modal -->
+            <% if can? :update, review %>
+            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#reviewModal<%= review.id %>">
+              View Details
+            </button>
+              <%end %>
 
-<%= link_to 'New review', new_movie_review_path %> |
-<%= link_to 'Back to Movie', movie_path(@movie) %>
+            <!-- Modal -->
+            <div class="modal fade" id="reviewModal<%= review.id %>" tabindex="-1" aria-labelledby="reviewModalLabel<%= review.id %>" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel<%= review.id %>">Review Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p><strong>User:</strong> <%= review.user.email %></p>
+                    <p><strong>Comment:</strong> <%= review.comment %></p>
+                    <%= render 'likes/like', review: review %>
+                  </div>
+                  <div class="modal-footer">
+                    <%= link_to 'Edit', edit_movie_review_path(@movie, review), {remote: true ,'data-bs-toggle' =>  "modal", 'data-bs-target' => "#exampleModalCenter",class: 'btn btn-primary btn-sm'} %>
+                    <%= link_to 'Delete', movie_review_path(@movie, review), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-4">
+    <% unless @movie.reviews.exists?(user_id: current_user.id) %>
+    <%= link_to 'Add review', new_movie_review_path, {remote: true ,'data-bs-toggle' =>  "modal", 'data-bs-target' => '#exampleModalCenter',  class: 'btn btn-success'} %> |
+      <%end %>
+    <%= link_to 'Back', movies_path, class: 'btn btn-secondary' %>
+  </div>
+</div>

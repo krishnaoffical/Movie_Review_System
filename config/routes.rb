@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'movies#index'
   resources :movies do
     resources :reviews do
-      resource :likes, only: %i[create destroy]
+      resource :likes, only: %i[create]
     end
     resources :ratings
   end

@@ -5,10 +5,7 @@
   font-size: 14px; /* Adjust the size as needed */
   display: flex;
 }
-.star-rating {
-  font-size: 20px; /* Adjust the size as needed */
-  display: flex;
-}
+
 .star-rating small {
   font-size: 13px; /* Adjust the size of the rating value */
 }
@@ -19,11 +16,6 @@
 
 .star.filled {
   color: gold; /* Filled star color */
-}
-.star-label {
-  cursor: pointer;
-  color: gray; /* Default star color */
-  transition: color 0.2s
 }
 
 .star-label.hovered,
@@ -41,4 +33,32 @@ input[type="radio"]:checked + label {
   width: 1px;
   height: 1px;
   overflow: hidden;
+}
+
+.star-rating {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.star-label {
+  font-size: 2em;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+
+.smallcard {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.alert {
+  margin-top: 20px;
 }
