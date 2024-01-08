@@ -1,0 +1,61 @@
+<div class="container mt-4">
+  <div class="card" style="max-width: 600px; margin: auto;">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4">Movie Information</h2>
+
+      <%= form_with(model: movie, local: true) do |form| %>
+        <% if movie.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger">
+            <h4><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h4>
+            <ul>
+              <% movie.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="mb-3">
+          <%= form.label :title, class: "form-label" %>
+          <%= form.text_field :title, class: "form-control", placeholder: "Enter the title" %>
+        </div>
+
+        <div class="mb-3 d-flex justify-content-between">
+          <div style="width: 48%;">
+            <%= form.label :movie_length, class: "form-label" %>
+            <%= form.text_field :movie_length, class: "form-control", placeholder: "Enter the movie length" %>
+          </div>
+          <div style="width: 48%;">
+            <%= form.label :release_date, class: "form-label" %>
+            <%= form.date_field :release_date, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="mb-3 d-flex justify-content-between">
+          <div style="width: 48%;">
+            <%= form.label :director, class: "form-label" %>
+            <%= form.text_field :director, class: "form-control", placeholder: "Enter the director" %>
+          </div>
+          <div style="width: 48%;">
+            <%= form.label :genre, class: "form-label" %>
+            <%= form.text_field :genre, class: "form-control", placeholder: "Enter the genre" %>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :description, class: "form-label" %>
+          <%= form.text_area :description, class: "form-control", placeholder: "Enter the description", style: "height: 100px; resize: none;" %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :image, class: "form-label" %>
+          <%= form.file_field :image, class: "form-control" %>
+        </div>
+
+        <div class="text-center">
+          <%= form.submit "Save", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

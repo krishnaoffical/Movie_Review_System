@@ -1,0 +1,4 @@
+<div class="like-buttons">
+   <%= link_to "Like", movie_review_likes_path(@movie,review, liked: 'true'), method: :post, class: "like-button" %><%= review.likes.where(liked: true).count %>
+   <%= link_to "Unlike", movie_review_likes_path(@movie,review, liked: 'false'), method: :post, class: "unlike-button" %><%= review.likes.where(liked: false).count %>
+</div>

@@ -1,0 +1,46 @@
+<head>
+  <%= stylesheet_link_tag 'movies' %>
+</head>
+
+<div class="movie-container">
+  <% @movies.each do |movie| %>
+    <div class="movie-card">
+      <div class="img-thumbnail">
+        <% if movie.image.attached? %>
+          <%= link_to image_tag(movie.image, class: "movie-image", loading: "lazy"), movie %>
+        <% else %>
+          <p>Preview not available</p>
+        <% end %>
+      </div>
+      <% if movie.average_rating.present? %>
+        <% filled_stars = movie.average_rating.round %>
+        <div class="star-count">
+          <% 5.times do |i| %>
+            <% if i < filled_stars %>
+              <span class="star">&#9733;</span>
+            <% else %>
+              <span class="star">&#9734;</span>
+            <% end %>
+          <% end %>
+          (<%= '%.1f' % movie.average_rating %>)
+        </div>
+      <% else %>
+        <p>No ratings yet</p>
+      <% end %>
+      <p class="ratings-count">Ratings Count: <%= movie.ratings_count %></p>
+      <div class="dropdown">
+        <button class="btn btn-primary btn-sm rounded-5" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="plus-icon">+</span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><%= link_to "Reviews", movie_reviews_path(movie) %></li>
+          <li><%= link_to "Ratings", movie_ratings_path(movie) %></li>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="pagination">
+  <%= paginate @movies %>
+</div>

@@ -1,0 +1,64 @@
+// Place all the styles related to the Ratings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.star-count {
+  font-size: 14px; /* Adjust the size as needed */
+  display: flex;
+}
+
+.star-rating small {
+  font-size: 13px; /* Adjust the size of the rating value */
+}
+
+.star {
+  color: gray; /* Default star color */
+}
+
+.star.filled {
+  color: gold; /* Filled star color */
+}
+
+.star-label.hovered,
+.star-label.selected{
+  color: gold;
+}
+input[type="radio"]:checked + label {
+  color: gold; /* Change the color to gold on hover and when checked */
+}
+
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* Clip the radio buttons to hide them */
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.star-rating {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.star-label {
+  font-size: 2em;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+
+.smallcard {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.alert {
+  margin-top: 20px;
+}

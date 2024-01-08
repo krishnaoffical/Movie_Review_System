@@ -1,0 +1,24 @@
+<%= form_with(model: [movie, @review]) do |form| %>
+    <% if @review.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h4><%= pluralize(@review.errors.count, "error") %> prohibited this comment from being saved:</h4>
+        <ul>
+          <% @review.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <div class=" justify-content-center">
+  <div class="card p-3 blue" style="width: 500px">
+    <div class="form-group mb-3">
+      <%= form.label :comment, class: "form-label" %>
+      <%= form.text_area :comment, class: "form-control comment-input" %>
+    </div>
+
+    <div class="form-group text-center">
+      <%= form.submit "Post Comment", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+</div>

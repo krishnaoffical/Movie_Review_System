@@ -1,0 +1,60 @@
+<head>
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          const stars = document.querySelectorAll(".star-label");
+
+          stars.forEach(function (star, index) {
+              star.addEventListener("mouseover", function () {
+                  for (let i = 0; i <= index; i++) {
+                      stars[i].classList.add("hovered");
+                  }
+              });
+
+              star.addEventListener("mouseout", function () {
+                  stars.forEach(function (star) {
+                      star.classList.remove("hovered");
+                  });
+              });
+
+              star.addEventListener("click", function () {
+                  stars.forEach(function (star, i) {
+                      if (i <= index) {
+                          star.classList.add("selected");
+                      } else {
+                          star.classList.remove("selected");
+                      }
+                  });
+              });
+          });
+      });
+  </script>
+</head>
+
+<div class="smallcard">
+  <%= form_with(model: [movie, @rating]) do |form| %>
+    <% if @rating.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(@rating.errors.count, "error") %> prohibited this comment from being saved:</h2>
+        <ul>
+          <% @rating.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <label for="rating_value">Rate this Movie:</label>
+      <div class="star-rating">
+        <% (1..5).each do |rating_value| %>
+          <input type="radio" id="rating_rating_value_<%= rating_value %>" name="rating[rating_value]" value="<%= rating_value %>" class="star visually-hidden">
+          <label for="rating_rating_value_<%= rating_value %>" class="star-label">&#9733;</label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="actions text-center">
+      <%= form.submit class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
